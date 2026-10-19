@@ -1,0 +1,26 @@
+name: player_activity
+description: Player-level gaming activity, one row per player per gaming day.
+base_table:
+  database: REGAL_PROD
+  schema: ANALYTICS
+  table: PLAYER_ACTIVITY
+
+dimensions:
+  - name: tier
+    expr: TIER_CD
+    data_type: VARCHAR
+    synonyms: ["player tier", "card level"]
+  - name: host
+    expr: HOST_ID
+    data_type: NUMBER
+    description: Casino host assigned to the player.
+
+measures:
+  - name: theoretical_win
+    expr: THEO_WIN
+    data_type: FLOAT
+    default_aggregation: sum
+  - name: comp_points
+    expr: COMP_POINTS
+    data_type: NUMBER
+    default_aggregation: sum

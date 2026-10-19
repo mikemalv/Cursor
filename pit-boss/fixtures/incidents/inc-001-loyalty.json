@@ -1,0 +1,11 @@
+{
+  "id": "inc-001-loyalty",
+  "source": "sentry",
+  "detectedAt": "2026-09-05T02:14:00Z",
+  "severity": "sev3",
+  "service": "loyalty",
+  "title": "Guests at 24,999 lifetime points not promoted to Diamond tier",
+  "body": "Player services reports ~40 guests sitting exactly on a tier boundary were not upgraded at the nightly rollover. Sentry: TierCalc.evaluate returned 'GOLD' for lifetimePoints=25000. Reproduced against last night's batch.",
+  "expectedSuspectFiles": ["services/loyalty/tier-calc.ts"],
+  "expectedZone": "STANDARD"
+}

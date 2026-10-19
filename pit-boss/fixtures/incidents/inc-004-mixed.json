@@ -1,0 +1,15 @@
+{
+  "id": "inc-004-mixed",
+  "source": "snyk",
+  "detectedAt": "2026-09-04T22:10:00Z",
+  "severity": "sev2",
+  "service": "platform",
+  "title": "CVE-2026-31337 in transitive dependency used across three services",
+  "body": "Snyk flags a prototype-pollution CVE in a shared utility pulled in by loyalty, payments and wagering. Fix is a version bump, but the dependency is present in a certified component.",
+  "expectedSuspectFiles": [
+    "services/loyalty/tier-calc.ts",
+    "services/payments/cage-txn.ts",
+    "services/wagering/payout.ts"
+  ],
+  "expectedZone": "GAMING_REGULATED"
+}

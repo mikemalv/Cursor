@@ -1,0 +1,52 @@
+{
+  "comment": "Committed snapshot of INFORMATION_SCHEMA.TAG_REFERENCES. Offline fallback when the warehouse is unreachable. The gate fails closed if this file is missing a requested object.",
+  "objects": {
+    "ANALYTICS.MARKETING.CAMPAIGN_ROI": [],
+    "ANALYTICS.PLAYER.PLAYER_SEGMENTS": [
+      {
+        "name": "GOVERNANCE.DATA_CLASSIFICATION",
+        "value": "RESTRICTED_PII",
+        "inherited_from": "ANALYTICS.PLAYER"
+      }
+    ],
+    "ANALYTICS.PLAYER.PLAYER_LOOKALIKE": [
+      {
+        "name": "GOVERNANCE.DATA_CLASSIFICATION",
+        "value": "RESTRICTED_PII",
+        "inherited_from": "ANALYTICS.PLAYER"
+      }
+    ],
+    "ANALYTICS.REGULATORY.DAILY_GROSS_GAMING_REVENUE": [
+      {
+        "name": "GOVERNANCE.REGULATORY_SCOPE",
+        "value": "NGCB_MICS",
+        "inherited_from": null
+      }
+    ],
+    "ANALYTICS.REGULATORY.NGCB_MONTHLY_REVENUE": [
+      {
+        "name": "GOVERNANCE.REGULATORY_SCOPE",
+        "value": "NGCB_MICS",
+        "inherited_from": "ANALYTICS.REGULATORY"
+      }
+    ]
+  },
+  "schemas": {
+    "ANALYTICS.MARKETING": [],
+    "ANALYTICS.PLAYER": [
+      {
+        "name": "GOVERNANCE.DATA_CLASSIFICATION",
+        "value": "RESTRICTED_PII"
+      }
+    ],
+    "ANALYTICS.REGULATORY": [
+      {
+        "name": "GOVERNANCE.REGULATORY_SCOPE",
+        "value": "NGCB_MICS"
+      }
+    ]
+  },
+  "databases": {
+    "ANALYTICS": []
+  }
+}

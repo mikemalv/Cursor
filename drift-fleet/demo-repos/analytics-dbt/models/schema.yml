@@ -1,0 +1,17 @@
+version: 2
+sources:
+  - name: analytics
+    database: REGAL_PROD
+    tables:
+      - name: player_activity
+        columns:
+          - name: player_id
+          - name: tier_cd
+          - name: host_id
+            description: Casino host assigned to the player.
+          - name: theo_win
+models:
+  - name: player_daily
+    columns:
+      - name: host_id
+        tests: [not_null]

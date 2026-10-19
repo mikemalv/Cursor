@@ -1,0 +1,102 @@
+# ---------------------------------------------------------------------------
+# Drift Fleet migration policy.
+#
+# Same principle as pit-boss: the boundary is deterministic code reading this
+# file, never a model. What differs is the SIGNAL -- here the source of truth
+# lives OUTSIDE the repositories, in the warehouse contract.
+# ---------------------------------------------------------------------------
+version: 1
+organization: Regal Gaming Group
+
+# What automation each class of schema change earns.
+change_classes:
+  ADD_COLUMN:
+    automate: true
+    consumer_automate: true
+    rationale: Additive and backward compatible. No consumer breaks.
+    output: pull_request
+
+  RENAME_COLUMN:
+    automate: true
+    consumer_automate: true
+    min_confidence: 0.9          # below this it is treated as DROP + ADD
+    require_compat_view: true    # ship an aliasing view so old and new coexist
+    rationale: Mechanical once the rename is confirmed by ALTER history.
+    output: pull_request
+
+  RETYPE_WIDENING:
+    automate: true
+    consumer_automate: true
+    rationale: No representable value is lost.
+    output: pull_request
+
+  NULLABILITY_RELAX:
+    automate: true
+    consumer_automate: true
+    rationale: Consumers that tolerated NOT NULL tolerate NULL-able reads.
+    output: pull_request
+
+  NULLABILITY_TIGHTEN:
+    automate: false
+    consumer_automate: false
+    consumer_rationale: >
+      Readers are unaffected, but writers must be audited before the constraint
+      lands, and that audit is a human judgement about upstream systems.
+    rationale: >
+      Writers may already emit NULLs. Requires a backfill and a writer audit
+      before the constraint can be applied.
+    output: migration_plan
+
+  RETYPE_NARROWING:
+    automate: false
+    consumer_automate: false
+    consumer_rationale: >
+      A consumer cannot be migrated until someone has profiled the existing
+      column and decided what happens to values outside the new domain.
+    rationale: >
+      Values outside the new domain are silently lost or error at load. Requires
+      a data profile of the existing column before anyone writes code.
+    output: migration_plan
+
+  DROP_COLUMN:
+    # The producer action is irreversible. Consumer-side removal is not.
+    automate: false
+    consumer_automate: true
+    consumer_rationale: >
+      Removing a reference to a doomed column is mechanical and independently
+      safe -- and it is the work that has to happen before the drop is allowed.
+    rationale: >
+      Irreversible and breaking. Every live consumer must be migrated and merged
+      BEFORE the column is dropped. The output is a sequenced deprecation plan,
+      never a single PR.
+    output: deprecation_plan
+
+# Consumer repositories, and how much automation each one earns.
+consumers:
+  - repo: analytics-dbt
+    kind: dbt
+    criticality: standard
+    automate: true
+  - repo: svc-loyalty
+    kind: application
+    criticality: standard
+    automate: true
+  - repo: bi-semantic
+    kind: semantic_model
+    criticality: standard
+    automate: true
+  - repo: svc-reporting
+    kind: application
+    criticality: sox_scoped
+    authority: "SOX ITGC / financial reporting"
+    automate: false
+    output: change_dossier
+    rationale: >
+      Feeds externally reported financial figures. Changes follow the controlled
+      change process; an agent may prepare the package but may not open the PR.
+
+guardrails:
+  max_files_per_repo: 25
+  # A destructive producer step may never be scheduled before every consumer of
+  # the affected column has merged. Enforced by the sequencer, not by a prompt.
+  block_destructive_until_consumers_merged: true

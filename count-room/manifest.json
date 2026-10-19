@@ -1,0 +1,17 @@
+{
+  "sql/marts/marketing/campaign_roi.sql": {
+    "object": "ANALYTICS.MARKETING.CAMPAIGN_ROI",
+    "database": "ANALYTICS",
+    "schema": "ANALYTICS.MARKETING"
+  },
+  "sql/marts/player/player_segments.sql": {
+    "object": "ANALYTICS.PLAYER.PLAYER_SEGMENTS",
+    "database": "ANALYTICS",
+    "schema": "ANALYTICS.PLAYER"
+  },
+  "sql/marts/regulatory/daily_ggr.sql": {
+    "object": "ANALYTICS.REGULATORY.DAILY_GROSS_GAMING_REVENUE",
+    "database": "ANALYTICS",
+    "schema": "ANALYTICS.REGULATORY"
+  }
+}

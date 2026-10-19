@@ -1,0 +1,74 @@
+# ---------------------------------------------------------------------------
+# Pit Boss remediation policy.
+#
+# THIS FILE IS THE LOAD-BEARING DESIGN DECISION OF THE WHOLE SYSTEM.
+#
+# It is evaluated by deterministic code, never by a model. A compliance officer
+# who does not read TypeScript must be able to read, review and sign off on it.
+# Zones are matched most-specific-first; the first matching rule wins.
+# ---------------------------------------------------------------------------
+version: 1
+organization: Regal Gaming Group
+default_zone: STANDARD
+
+zones:
+  - id: GAMING_REGULATED
+    label: Certified gaming system
+    authority: "NV Gaming Control Board Reg 14 / GLI-33"
+    paths:
+      - "services/rng/**"
+      - "services/wagering/**"
+      - "services/slots/paytable/**"
+    rationale: >
+      Code governing randomness, wagering and payout calculation is certified by an
+      independent test lab. Any modification requires re-submission and re-certification.
+    actions:
+      may_patch: false
+      may_open_pr: false
+      requires_human: true
+      output: compliance_dossier
+      reviewers: ["compliance", "regulatory-engineering"]
+
+  - id: PCI_SCOPE
+    label: Cardholder data environment
+    authority: "PCI-DSS v4.0"
+    paths:
+      - "services/payments/**"
+      - "services/cage/**"
+      - "packages/tokenization/**"
+    rationale: >
+      Handles or transits cardholder data. Changes are permitted but must be
+      independently reviewed and must not introduce new dependencies.
+    actions:
+      may_patch: true
+      may_open_pr: true
+      requires_human: true
+      required_reviews: 2
+      forbid_new_dependencies: true
+      mandatory_agents: ["security"]
+      output: evidence_package
+
+  - id: STANDARD
+    label: Non-regulated application code
+    authority: "Internal engineering standards"
+    paths:
+      - "**"
+    rationale: >
+      Ordinary application code. Full automated remediation is permitted subject
+      to a passing reproduction test and green CI.
+    actions:
+      may_patch: true
+      may_open_pr: true
+      requires_human: false
+      mandatory_agents: []
+      output: pull_request
+
+# Global guardrails applied on top of any zone.
+guardrails:
+  max_files_changed: 12
+  max_lines_changed: 400
+  forbid_paths:
+    - "**/*.env"
+    - "**/secrets/**"
+    - ".github/workflows/**"
+  escalate_if_confidence_below: 0.6

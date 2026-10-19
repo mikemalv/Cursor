@@ -1,0 +1,19 @@
+[
+  { "repo": "analytics-dbt", "file": "models/player_daily.sql",            "line": 10, "kind": "dbt_model",     "column": "TIER_CD",     "snippet": "tier_cd as tier_code" },
+  { "repo": "analytics-dbt", "file": "models/player_daily.sql",            "line": 11, "kind": "dbt_model",     "column": "HOST_ID",     "snippet": "host_id," },
+  { "repo": "analytics-dbt", "file": "models/schema.yml",                  "line": 12, "kind": "dbt_model",     "column": "HOST_ID",     "snippet": "- name: host_id" },
+  { "repo": "analytics-dbt", "file": "models/player_daily.sql",            "line": 8,  "kind": "dbt_model",     "column": "THEO_WIN",    "snippet": "theo_win," },
+  { "repo": "svc-loyalty",   "file": "src/repo.ts",                        "line": 3,  "kind": "embedded_sql",  "column": "TIER_CD",     "snippet": "ACTIVITY_COLUMNS = [... \"tier_cd\" ...]" },
+  { "repo": "svc-loyalty",   "file": "src/repo.ts",                        "line": 3,  "kind": "embedded_sql",  "column": "HOST_ID",     "snippet": "ACTIVITY_COLUMNS = [... \"host_id\" ...]" },
+  { "repo": "svc-loyalty",   "file": "src/repo.ts",                        "line": 18, "kind": "embedded_sql",  "column": "HOST_ID",     "snippet": "where host_id = ?" },
+  { "repo": "svc-loyalty",   "file": "sql/nightly_export.sql",             "line": 6,  "kind": "embedded_sql",  "column": "HOST_ID",     "snippet": "select player_id, host_id, tier_cd ..." },
+  { "repo": "svc-loyalty",   "file": "sql/nightly_export.sql",             "line": 6,  "kind": "embedded_sql",  "column": "TIER_CD",     "snippet": "select player_id, host_id, tier_cd ..." },
+  { "repo": "bi-semantic",   "file": "semantic/player_activity.yaml",      "line": 11, "kind": "semantic_yaml", "column": "TIER_CD",     "snippet": "expr: TIER_CD" },
+  { "repo": "bi-semantic",   "file": "semantic/player_activity.yaml",      "line": 15, "kind": "semantic_yaml", "column": "HOST_ID",     "snippet": "expr: HOST_ID" },
+  { "repo": "bi-semantic",   "file": "semantic/player_activity.yaml",      "line": 21, "kind": "semantic_yaml", "column": "THEO_WIN",    "snippet": "expr: THEO_WIN" },
+  { "repo": "bi-semantic",   "file": "dashboards/host_performance.json",   "line": 3,  "kind": "embedded_sql",  "column": "HOST_ID",     "snippet": "group by host_id" },
+  { "repo": "svc-reporting", "file": "src/mart.ts",                        "line": 13, "kind": "orm_mapping",   "column": "TIER_CD",     "snippet": "tierCode: \"TIER_CD\"" },
+  { "repo": "svc-reporting", "file": "src/mart.ts",                        "line": 14, "kind": "orm_mapping",   "column": "HOST_ID",     "snippet": "hostId: \"HOST_ID\"" },
+  { "repo": "svc-reporting", "file": "src/mart.ts",                        "line": 11, "kind": "orm_mapping",   "column": "THEO_WIN",    "snippet": "theoreticalWin: \"THEO_WIN\"" },
+  { "repo": "svc-reporting", "file": "src/mart.ts",                        "line": 12, "kind": "orm_mapping",   "column": "COMP_POINTS", "snippet": "compPoints: \"COMP_POINTS\"" }
+]

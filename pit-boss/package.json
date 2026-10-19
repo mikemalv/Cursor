@@ -1,0 +1,27 @@
+{
+  "name": "pit-boss",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Governed incident-to-remediation agent pipeline for regulated casino gaming platforms. Built on the Cursor SDK.",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "policy": "tsx src/cli.ts policy",
+    "triage": "tsx src/cli.ts triage",
+    "run": "tsx src/cli.ts run",
+    "replay": "tsx src/cli.ts replay",
+    "approve": "tsx src/cli.ts approve",
+    "test:policy": "node --test --experimental-strip-types src/policy.test.ts",
+    "smoke": "tsx scripts/smoke.ts"
+  },
+  "dependencies": {
+    "@cursor/sdk": "latest",
+    "yaml": "^2.5.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

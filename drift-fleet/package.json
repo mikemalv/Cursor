@@ -1,0 +1,17 @@
+{
+  "name": "drift-fleet",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Warehouse schema drift -> cross-repo code migration fleet. Cursor SDK. Same pipeline as pit-boss, different signal.",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "diff": "tsx src/cli.ts diff",
+    "plan": "tsx src/cli.ts plan",
+    "scout": "tsx src/cli.ts scout",
+    "run": "tsx src/cli.ts run",
+    "test:core": "node --experimental-strip-types --test src/core.test.ts"
+  },
+  "dependencies": { "@cursor/sdk": "latest", "yaml": "^2.5.0" },
+  "devDependencies": { "@types/node": "^22.7.0", "tsx": "^4.19.0", "typescript": "^5.6.0" }
+}

@@ -1,0 +1,38 @@
+{
+  "roi.profile": {
+    "sql": "select campaign_id, sum(impressions) as impressions from analytics.marketing.campaign_daily group by 1 having sum(impressions) = 0",
+    "summary": "3 of 412 campaigns have had zero impressions since 2026-09-02. No tagged or financial object downstream. Query cost: fractions of a cent."
+  },
+  "roi.lineage": {
+    "sql": "select * from table(information_schema.object_dependencies()) where referenced_object = 'CAMPAIGN_ROI'",
+    "summary": "OBJECT_DEPENDENCIES returns two marketing dashboard views (CAMPAIGN_DASHBOARD, ROI_TREND). Nothing tagged, nothing financial."
+  },
+  "roi.clone": {
+    "sql": "select count(*) from analytics.marketing.campaign_roi",
+    "summary": "Cloned ANALYTICS.MARKETING, ran the changed model and eleven dependents against production volume. Assertions pass. Row-count delta is exactly the three campaigns now returning null ROI instead of failing the run."
+  },
+  "pii.profile": {
+    "sql": "select count(*) as exposed_rows from analytics.player.player_segments where email is not null or date_of_birth is not null",
+    "summary": "184,412 rows in PLAYER_SEGMENTS currently carry EMAIL or DATE_OF_BIRTH. Columns first appeared after a source-table release two days ago."
+  },
+  "pii.access_history": {
+    "sql": "select user_name, role_name, query_start_time from snowflake.account_usage.access_history where objects_modified is not null",
+    "summary": "ACCESS_HISTORY: four roles ran nine queries touching EMAIL or DATE_OF_BIRTH over 41 hours. Converts “we had an exposure” into a reportable set of facts."
+  },
+  "pii.lineage": {
+    "sql": "select * from table(information_schema.object_dependencies()) where referenced_object = 'PLAYER_SEGMENTS'",
+    "summary": "OBJECT_DEPENDENCIES finds the same PII flowing into ANALYTICS.PLAYER.PLAYER_LOOKALIKE — a hand-created view that is not in the SQL repo and that the proposed patch does not touch."
+  },
+  "pii.clone": {
+    "sql": "select count(*) from analytics.player.player_segments",
+    "summary": "Clone run is green: EMAIL and DATE_OF_BIRTH are gone from the proposed model and nothing in the SQL repo breaks. Green is why the next stage matters — materialized rows and PLAYER_LOOKALIKE are still exposed."
+  },
+  "ggr.profile": {
+    "sql": "select gaming_day, filed_ggr, slot_ggr, filed_ggr - slot_ggr as delta from finance.recon.daily_ggr_vs_slot where abs(filed_ggr - slot_ggr) > 0",
+    "summary": "Three gaming days off, all high overnight volume. $41,280 moved across the midnight boundary in the last 30 days. Reading is always allowed — the dossier is specific because this stage ran."
+  },
+  "ggr.lineage": {
+    "sql": "select * from table(information_schema.object_dependencies()) where referenced_object = 'DAILY_GROSS_GAMING_REVENUE'",
+    "summary": "OBJECT_DEPENDENCIES: this object feeds ANALYTICS.REGULATORY.NGCB_MONTHLY_REVENUE and two financial marts used in external reporting. The blast radius is a filing, not a dashboard."
+  }
+}

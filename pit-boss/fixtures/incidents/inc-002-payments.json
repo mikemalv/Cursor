@@ -1,0 +1,11 @@
+{
+  "id": "inc-002-payments",
+  "source": "pagerduty",
+  "detectedAt": "2026-09-05T03:02:00Z",
+  "severity": "sev1",
+  "service": "payments",
+  "title": "Cage transaction failures writing card data to application logs",
+  "body": "Splunk alert: log lines from cage-txn contain 16-digit sequences matching card BIN ranges. Triggered by the declined-transaction error branch. PCI incident opened.",
+  "expectedSuspectFiles": ["services/payments/cage-txn.ts"],
+  "expectedZone": "PCI_SCOPE"
+}

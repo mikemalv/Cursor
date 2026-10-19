@@ -1,0 +1,11 @@
+{
+  "id": "pii",
+  "detectedAt": "2026-09-06T03:12:00Z",
+  "severity": "sev2",
+  "title": "EMAIL and DATE_OF_BIRTH appeared in PLAYER_SEGMENTS",
+  "body": "A data assertion fired at 03:12: columns matching email and date-of-birth patterns appeared in ANALYTICS.PLAYER.PLAYER_SEGMENTS, which the marketing analyst role can read.",
+  "targetObject": "ANALYTICS.PLAYER.PLAYER_SEGMENTS",
+  "sqlFile": "sql/marts/player/player_segments.sql",
+  "expectedZone": "RESTRICTED_PII",
+  "expectedSuspectFiles": ["sql/marts/player/player_segments.sql"]
+}

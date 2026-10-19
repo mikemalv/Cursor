@@ -1,0 +1,27 @@
+[project]
+name = "count-room"
+version = "0.1.0"
+description = "Governed Snowflake remediation agent on the Cursor Python SDK."
+requires-python = ">=3.10"
+dependencies = [
+  "cursor-sdk==1.0.31",
+  "duckdb>=1.4,<2",
+  "pyyaml",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+count-room = "count_room.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

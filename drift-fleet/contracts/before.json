@@ -1,0 +1,19 @@
+{
+  "database": "REGAL_PROD",
+  "capturedAt": "2026-09-01T00:00:00Z",
+  "objects": {
+    "ANALYTICS.PLAYER_ACTIVITY": {
+      "kind": "table",
+      "owner": "data-platform",
+      "columns": {
+        "PLAYER_ID":   { "type": "NUMBER(38,0)",  "nullable": false },
+        "PROPERTY_ID": { "type": "NUMBER(38,0)",  "nullable": false },
+        "PLAY_DT":     { "type": "DATE",          "nullable": false },
+        "THEO_WIN":    { "type": "FLOAT",         "nullable": true  },
+        "COMP_POINTS": { "type": "NUMBER(38,0)",  "nullable": true  },
+        "TIER_CD":     { "type": "VARCHAR(16)",   "nullable": true  },
+        "HOST_ID":     { "type": "NUMBER(38,0)",  "nullable": true  }
+      }
+    }
+  }
+}

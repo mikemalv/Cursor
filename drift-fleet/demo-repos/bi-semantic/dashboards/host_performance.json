@@ -1,0 +1,5 @@
+{
+  "title": "Host Performance",
+  "query": "select host_id, sum(theo_win) as theo from analytics.player_activity group by host_id order by theo desc limit 25",
+  "refresh": "daily"
+}

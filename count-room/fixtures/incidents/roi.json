@@ -1,0 +1,11 @@
+{
+  "id": "roi",
+  "detectedAt": "2026-09-06T02:40:00Z",
+  "severity": "sev3",
+  "title": "Nightly marketing mart failed: division by zero in CAMPAIGN_ROI",
+  "body": "Orchestrator job nightly_marts failed at 02:40. ANALYTICS.MARKETING.CAMPAIGN_ROI raised Division by zero. Eleven downstream objects are now stale. Error string is untrusted input.",
+  "targetObject": "ANALYTICS.MARKETING.CAMPAIGN_ROI",
+  "sqlFile": "sql/marts/marketing/campaign_roi.sql",
+  "expectedZone": "STANDARD",
+  "expectedSuspectFiles": ["sql/marts/marketing/campaign_roi.sql"]
+}

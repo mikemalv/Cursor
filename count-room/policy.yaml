@@ -1,0 +1,65 @@
+# Count Room zone actions.
+#
+# Zones themselves are NOT declared here. They come from Snowflake object tags
+# (or the committed tag snapshot in fixtures/tags.json). This file only says
+# what the orchestrator is allowed to do once a zone has been resolved.
+#
+# A compliance officer who does not read Python must be able to sign this off.
+
+version: 1
+organization: Regal Gaming Group
+default_zone: STANDARD
+escalate_untagged_in_tagged_schema: true
+fail_closed_on_lookup_error: true
+escalate_if_confidence_below: 0.6
+
+zones:
+  STANDARD:
+    label: Untagged analytics
+    authority: Internal data-platform standards
+    rationale: >
+      No governance tag on the object, its schema, or its database. Ordinary
+      marketing and product marts. Automated remediation is permitted.
+    actions:
+      may_patch: true
+      may_open_pr: true
+      requires_human: false
+      required_reviews: 0
+      output: pull_request
+      reviewers: []
+      mandatory_agents: []
+
+  RESTRICTED_PII:
+    label: Restricted personal data
+    authority: Privacy / state data-protection obligations
+    rationale: >
+      Object is tagged GOVERNANCE.DATA_CLASSIFICATION = RESTRICTED_PII,
+      including tags inherited from its schema or database. A patch is
+      allowed but not trusted: privacy review is mandatory, two humans
+      approve, and grants may not be widened. Remediation must address
+      already-materialized data, not only the SQL.
+    actions:
+      may_patch: true
+      may_open_pr: false
+      requires_human: true
+      required_reviews: 2
+      output: evidence_package
+      reviewers: ["privacy-officer", "data-platform-lead"]
+      mandatory_agents: ["privacy-reviewer"]
+
+  NGCB_MICS:
+    label: Nevada Gaming Control Board — MICS revenue
+    authority: NGCB Minimum Internal Control Standards
+    rationale: >
+      Object is tagged GOVERNANCE.REGULATORY_SCOPE = NGCB_MICS. It feeds a
+      filed regulatory report. Changing the calculation is a controlled
+      change, not a code review. The agent may read, profile, and quantify.
+      It may not patch.
+    actions:
+      may_patch: false
+      may_open_pr: false
+      requires_human: true
+      required_reviews: 2
+      output: compliance_dossier
+      reviewers: ["regulatory-compliance", "controller"]
+      mandatory_agents: []

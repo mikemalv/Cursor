@@ -1,0 +1,11 @@
+{
+  "id": "inc-003-wagering",
+  "source": "pagerduty",
+  "detectedAt": "2026-09-05T01:47:00Z",
+  "severity": "sev1",
+  "service": "wagering",
+  "title": "Parlay payouts short by one cent on 3+ leg tickets",
+  "body": "Sportsbook supervisor reports systematic one-cent shortfall on parlays with three or more legs. Sample ticket 88213: expected 412.37, paid 412.36. Suspect rounding in the leg-multiplication loop.",
+  "expectedSuspectFiles": ["services/wagering/payout.ts"],
+  "expectedZone": "GAMING_REGULATED"
+}

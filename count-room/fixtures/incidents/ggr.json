@@ -1,0 +1,11 @@
+{
+  "id": "ggr",
+  "detectedAt": "2026-09-06T07:05:00Z",
+  "severity": "sev1",
+  "title": "Filed gross gaming revenue disagrees with slot accounting on 3 of the last 30 days",
+  "body": "Not a job failure — the model built fine. Finance reconciliation flagged that ANALYTICS.REGULATORY.DAILY_GROSS_GAMING_REVENUE disagreed with the slot accounting system on 3 of the last 30 days. Overnight volume looks high on the mismatched days.",
+  "targetObject": "ANALYTICS.REGULATORY.DAILY_GROSS_GAMING_REVENUE",
+  "sqlFile": "sql/marts/regulatory/daily_ggr.sql",
+  "expectedZone": "NGCB_MICS",
+  "expectedSuspectFiles": ["sql/marts/regulatory/daily_ggr.sql"]
+}

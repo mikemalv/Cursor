@@ -1,0 +1,5 @@
+/services/rng/          @regal/regulatory-engineering @regal/compliance
+/services/wagering/     @regal/regulatory-engineering @regal/compliance
+/services/payments/     @regal/security @regal/payments
+/packages/tokenization/ @regal/security
+/services/loyalty/      @regal/marketing-eng
